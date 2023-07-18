@@ -3,9 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Model
@@ -53,7 +55,7 @@ app.get("/user/:id", checkToken, async (req, res) => {
 
 // Register User
 
-app.post("auth/register", async (req, res) => {
+app.post("/auth/register", async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
 
   if (!name || !email || !password || !confirmPassword) return res.status(400).json({ message: "Fill in all fields" });
